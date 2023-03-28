@@ -14,4 +14,4 @@ $ npm run dev
 ```
 
 ### Preview
-assets/portfolio1.png
+![Preview](assets/portfolio1.png)
