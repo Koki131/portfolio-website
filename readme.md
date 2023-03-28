@@ -1,4 +1,4 @@
-# THREE.js Portfolio website
+# Portfolio website
 
 ### Setup
 
@@ -15,3 +15,6 @@ $ npm run dev
 
 ### Preview
 ![Preview](assets/portfolio1.png)
+
+
+
