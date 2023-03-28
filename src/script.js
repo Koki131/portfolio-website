@@ -25,20 +25,60 @@ import java2Cert from '../assets/certificates/java-2.png'
 import springCert from '../assets/certificates/spring.png'
 import htmlCssCert from '../assets/certificates/html-css.png'
 
+// logo 
+const logoImage = document.querySelector("#favicon");
+logoImage.href = logo;
 
-console.log(projectForeground);
-console.log(weather_app);
-console.log(portfolio);
+
+// loading images
+// project images
+const employeeDirectory = document.querySelector("#employee-directory");
+const transcription = document.querySelector("#transcription");
+const forecast = document.querySelector("#forecast");
+const cryptoTicker = document.querySelector("#crypto-ticker");
+const portfolioWebsite = document.querySelector("#portfolio");
+
+employeeDirectory.src = projectForeground;
+transcription.src = weather_app;
+forecast.src = weather_app;
+cryptoTicker.src = crypto_ticker;
+portfolioWebsite.src = portfolio;
+
+// certificate images
+const javaBackground = document.querySelector("#javaBackground");
+const javaCertificate = document.querySelector("#javaCert");
+const javaOneBackground = document.querySelector("#javaOneBackground");
+const javaOneCertificate = document.querySelector("#javaOneCert");
+const javaTwoBackground = document.querySelector("#javaTwoBackground");
+const javaTwoCertificate = document.querySelector("#javaTwoCert");
+const springBackground = document.querySelector("#springBackground");
+const springCertificate = document.querySelector("#springCert");
+const htmlCssBackground = document.querySelector("#htmlCssBackground");
+const htmlCssCertificate = document.querySelector("#htmlCssCert");
+
+
+javaBackground.src = javaOne;
+javaCertificate.src = javaCert;
+
+javaOneBackground.src = javaTwo;
+javaOneCertificate.src = java1Cert;
+javaTwoBackground.src = javaThree;
+javaTwoCertificate.src = java2Cert;
+springBackground.src = spring_image;
+springCertificate.src = springCert;
+htmlCssBackground.src = html_css;
+htmlCssCertificate.src = htmlCssCert;
+
 
 // Texture Loader
 const loader = new THREE.TextureLoader();
 const star = loader.load('./star.png');
-const java = loader.load('./images/java.png')
-const spring = loader.load('./images/spring.png')
-const mysql = loader.load('./images/mysql.png')
-const html = loader.load('./images/html.png')
-const css = loader.load('./images/css.png')
-const javascript = loader.load('./images/javascript.png')
+const java = loader.load('./rotating-images/java.png')
+const spring = loader.load('./rotating-images/spring.png')
+const mysql = loader.load('./rotating-images/mysql.png')
+const html = loader.load('./rotating-images/html.png')
+const css = loader.load('./rotating-images/css.png')
+const javascript = loader.load('./rotating-images/javascript.png')
 
 
 
