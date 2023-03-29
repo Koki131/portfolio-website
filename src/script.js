@@ -59,7 +59,6 @@ const htmlCssCertificate = document.querySelector("#htmlCssCert");
 
 javaBackground.src = javaOne;
 javaCertificate.src = javaCert;
-
 javaOneBackground.src = javaTwo;
 javaOneCertificate.src = java1Cert;
 javaTwoBackground.src = javaThree;
@@ -100,6 +99,7 @@ const imageGeometry = new THREE.PlaneGeometry(0.6, 0.6);
 
 
 
+// Setting the position and color of stars
 const colors = [
     new THREE.Color(0xAFC9FF), 
     new THREE.Color(0xC7D8FF), 
@@ -143,7 +143,7 @@ const particlesMaterial = new THREE.PointsMaterial({
     blending: THREE.AdditiveBlending,
 });
 
-// Create a new material with the image texture
+// Create a new material with the image textures
 const javaMaterial = new THREE.MeshBasicMaterial({ map: java, transparent: true });
 const javascriptMaterial = new THREE.MeshBasicMaterial({ map: javascript, transparent: true });
 const springMaterial = new THREE.MeshBasicMaterial({ map: spring, transparent: true });
@@ -290,16 +290,5 @@ const tick = () =>
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
 }
-
-// Get the current viewport dimensions
-const width = window.innerWidth;
-const height = window.innerHeight;
-
-// Resize the canvas to fit the viewport
-renderer.setSize(width, height);
-
-// Update the camera aspect ratio to match the new canvas size
-camera.aspect = width / height;
-camera.updateProjectionMatrix();
 
 tick();
