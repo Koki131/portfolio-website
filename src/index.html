@@ -7,15 +7,18 @@
 
     <link id="favicon" rel="icon" href="#">
 
-    <!-- Owl Carousel -->
+    <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+
+    
+    <!-- Owl Carousel -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
     <!-- animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
-    <!-- Owl carousel -->
-    <link rel="stylesheet" href="/node_modules/owl.carousel/dist/assets/owl.carousel.min.css" />
+
 
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
@@ -434,6 +437,7 @@
         const borderHome = CSSRulePlugin.getRule(".home:before");
         const homeH1 = document.querySelector(".home h1");
         const homeP = document.querySelector(".home p");
+        const homeTextContainer = CSSRulePlugin.getRule(".home .text-container::before");
         const homeTimeline = gsap.timeline();
         const homeBorderTimeline = gsap.timeline();
 
@@ -442,7 +446,7 @@
         const borderAbout = CSSRulePlugin.getRule(".about:before");
         const aboutH1 = document.querySelector('.about h1');
         const aboutP = document.querySelector('.about p');
-        const textContainer = CSSRulePlugin.getRule(".text-container::before");
+        const aboutTextContainer = CSSRulePlugin.getRule(".about .text-container::before");
         const aboutTimeline = gsap.timeline();
         const aboutPBorderTimeline = gsap.timeline();
 
@@ -450,6 +454,7 @@
         const testimonialsSection = document.querySelector("#testimonials");
         const borderTestimonials = CSSRulePlugin.getRule(".testimonials:before");
         const testimonialsH1 = document.querySelector('.testimonials h1');
+        const testimonialsTextContainer = CSSRulePlugin.getRule(".testimonials .text-container::before");
         const testimonialsCarousel = document.querySelector('.testimonials .owl-carousel');
         const testimonialsTimeline = gsap.timeline();
         const testimonialsBorderTimeline = gsap.timeline();
@@ -458,6 +463,7 @@
         const projectsSection = document.querySelector('#projects');
         const borderProjects = CSSRulePlugin.getRule(".projects:before");
         const projectsH1 = document.querySelector('.projects h1');
+        const projectsTextContainer = CSSRulePlugin.getRule(".projects .text-container::before");
         const projectsCarousel = document.querySelector('.projects .owl-carousel');
         const projectsTimeline = gsap.timeline();
         const projectsBorderTimeline = gsap.timeline();
@@ -466,6 +472,7 @@
         const certificatesSection = document.querySelector('#certificates');
         const borderCertificates = CSSRulePlugin.getRule(".certificates:before");
         const certificatesH1 = document.querySelector('.certificates h1');
+        const certificatesTextContainer = CSSRulePlugin.getRule(".certificates .text-container::before");
         const certificatesCarousel = document.querySelector('.certificates .owl-carousel');
         const certificatesTimeline = gsap.timeline();
         const certificatesBorderTimeline = gsap.timeline();
@@ -474,6 +481,7 @@
         const contactSection = document.querySelector('#contact');
         const borderContact = CSSRulePlugin.getRule(".contact:before");
         const contactH1 = document.querySelector('.contact h1');
+        const contactTextContainer = CSSRulePlugin.getRule(".contact .text-container::before");
         const contactContents = document.querySelector('.contact-content');
         const contactFields = document.querySelector('.fields');
         const contactTimeline = gsap.timeline();
@@ -489,7 +497,7 @@
 
         function animateHomeSection() {
             homeTimeline.from(borderHome, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
-            homeBorderTimeline.from(textContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
+            homeBorderTimeline.from(homeTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
             homeTimeline.to(homeH1, { duration: 2, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );            
             homeTimeline.to(homeP, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' }, "-=0.5" );
         }
@@ -497,32 +505,32 @@
 
         function animateAboutSection() {
             aboutTimeline.from(borderAbout, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
-            aboutPBorderTimeline.from(textContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
+            aboutPBorderTimeline.from(aboutTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
             aboutTimeline.to(aboutH1, {duration: 2, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
             aboutPBorderTimeline.to(aboutP, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '5px' }, "-=0.2" );
         }
 
         function animateTestimonialsSection() {
             testimonialsTimeline.from(borderTestimonials, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
-            testimonialsBorderTimeline.from(textContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
+            testimonialsBorderTimeline.from(testimonialsTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
             testimonialsTimeline.to(testimonialsH1, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
         }
 
         function animateProjectsSection() {
             projectsTimeline.from(borderProjects, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
-            projectsBorderTimeline.from(textContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
+            projectsBorderTimeline.from(projectsTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
             projectsTimeline.to(projectsH1, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
         }
 
         function animateCertificatesSection() {
             certificatesTimeline.from(borderCertificates, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
-            certificatesBorderTimeline.from(textContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
+            certificatesBorderTimeline.from(certificatesTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
             certificatesTimeline.to(certificatesH1, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
         }
 
         function animateContactSection() {
             contactTimeline.from(borderContact, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
-            contactBorderTimeline.from(textContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
+            contactBorderTimeline.from(contactTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
             contactTimeline.to(contactH1, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
             contactTimeline.to(contactContents, {delay: 1, duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px'}, "-=1.5");
         }

@@ -265,7 +265,57 @@ nav li a img {
     padding: 30px;
 }
 
-.text-container::before {
+.home .text-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-left: 1px solid #fff;
+    transform: scaleY(1);
+}
+.about .text-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-left: 1px solid #fff;
+    transform: scaleY(1);
+}
+.testimonials .text-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-left: 1px solid #fff;
+    transform: scaleY(1);
+}
+.projects .text-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-left: 1px solid #fff;
+    transform: scaleY(1);
+}
+.certificates .text-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-left: 1px solid #fff;
+    transform: scaleY(1);
+}
+.contact .text-container::before {
     content: '';
     position: absolute;
     top: 0;
