@@ -256,6 +256,9 @@ const meshes = [javaMesh, springMesh, mysqlMesh, htmlMesh, cssMesh, javascriptMe
 const meshCount = meshes.length;
 const rotationSpeed = 0.08;
 
+let passiveRotX = 0;
+let passiveRotY = 0;
+
 
 const tick = () =>
 {
@@ -263,19 +266,19 @@ const tick = () =>
 
     // Update objects
     sphere.rotation.y = .1 * elapsedTime;
-    particlesMesh.rotation.y = -.1 * elapsedTime;
+    particlesMesh.rotation.x = passiveRotX;
+    particlesMesh.rotation.y = passiveRotY;
+
+    // Update particle mesh rotation based on mouse movement
+    const dampeningFactor = 0.997;
+    particlesMesh.rotation.x += (-mouseY / window.innerHeight - particlesMesh.rotation.x) * dampeningFactor;
+    particlesMesh.rotation.y += (-mouseX / window.innerWidth - particlesMesh.rotation.y) * dampeningFactor;
 
 
+    // Update passive rotation angles
+    passiveRotX += rotationSpeed;
+    passiveRotY += rotationSpeed;
 
-    if (mouseX > 0) {
-        particlesMesh.rotation.x = -mouseY * (elapsedTime % 20 * 0.00008);
-        particlesMesh.rotation.y = -mouseX * (elapsedTime % 20 * 0.00008);     
-    }
-    
-
-    // Update Orbital Controls
-    // controls.update()
-    
     // Set mesh positions
     for (let i = 0; i < meshCount; i++) {
         const mesh = meshes[i];
@@ -292,3 +295,4 @@ const tick = () =>
 }
 
 tick();
+
