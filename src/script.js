@@ -238,12 +238,21 @@ renderer.setClearColor(new THREE.Color('#21282a'), 1)
 // Mouse
 document.addEventListener('mousemove', animateParticles);
 
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
+
 let mouseX = 0;
 let mouseY = 0;
 
+let prevMouseX = 0;
+let prevMouseY = 0;
+const delayFactor = 0.1;
+
 function animateParticles(event) {
-    mouseY = event.clientY;
-    mouseX = event.clientX;
+    prevMouseX += (event.clientX - windowHalfX - prevMouseX) * delayFactor;
+    prevMouseY += (event.clientY - windowHalfY - prevMouseY) * delayFactor;
+    mouseX = prevMouseX;
+    mouseY = prevMouseY;
 }
 
 /**
@@ -260,6 +269,8 @@ let passiveRotX = 0;
 let passiveRotY = 0;
 
 
+
+
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime();
@@ -271,9 +282,9 @@ const tick = () =>
 
     // Update particle mesh rotation based on mouse movement
     const dampeningFactor = 0.997;
+
     particlesMesh.rotation.x += (-mouseY / window.innerHeight - particlesMesh.rotation.x) * dampeningFactor;
     particlesMesh.rotation.y += (-mouseX / window.innerWidth - particlesMesh.rotation.y) * dampeningFactor;
-
 
     // Update passive rotation angles
     passiveRotX += rotationSpeed;
