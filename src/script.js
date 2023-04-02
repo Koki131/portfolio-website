@@ -81,25 +81,13 @@ const javascript = loader.load('./rotating-images/javascript.png')
 
 
 
-// Debug
-const gui = new dat.GUI()
-dat.GUI.toggleHide();
 
-// Canvas
-const canvas = document.querySelector('canvas.webgl')
-
-// Scene
-const scene = new THREE.Scene()
-
-// Objects
-const geometry = new THREE.SphereGeometry(0.6, 32, 32);
-
-// Create a new plane geometry with the same size as the sphere
-const imageGeometry = new THREE.PlaneGeometry(0.6, 0.6);
-
-
-
-// Setting the position and color of stars
+let camera, scene, renderer;
+let mouseX = 0, mouseY = 0;
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
+let materials = [];
+let meshes = [];
 const colors = [
     new THREE.Color(0xAFC9FF), 
     new THREE.Color(0xC7D8FF), 
@@ -109,201 +97,191 @@ const colors = [
     new THREE.Color(0xFFC78E),
     new THREE.Color(0xFFA651),
 ];
+const canvas = document.querySelector('canvas.webgl')
 
-const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 5000;
 
-const positionArray = new Float32Array(particlesCount * 3);
-const colorArray = new Float32Array(particlesCount * 3);
 
-for (let i = 0; i < particlesCount * 3; i++) {
-    positionArray[i] = (Math.random() - 0.5) * 5;
 
-    const color = colors[Math.floor(Math.random() * 4)];
-    color.toArray(colorArray, i * 3);
+init();
+animate();
+
+function init() {
+
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2000 );
+    camera.position.z = 1000;
+
+    scene = new THREE.Scene();
+    
+
+    const particlesGeometry = new THREE.BufferGeometry();
+
+    // Create a new plane geometry for the images
+    const imageGeometry = new THREE.PlaneGeometry(400, 400);
+    
+    const vertices = [];
+
+    for ( let i = 0; i < 10000; i ++ ) {
+
+        const x = Math.random() * 2000 - 1000;
+        const y = Math.random() * 2000 - 1000;
+        const z = Math.random() * 2000 - 1000;
+
+        vertices.push( x, y, z );
+
+    }
+
+    particlesGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+
+
+    // Create a new material with the image textures
+    
+    const javaMaterial = new THREE.MeshBasicMaterial({ map: java, transparent: true });
+    const javascriptMaterial = new THREE.MeshBasicMaterial({ map: javascript, transparent: true });
+    const springMaterial = new THREE.MeshBasicMaterial({ map: spring, transparent: true });
+    const mysqlMaterial = new THREE.MeshBasicMaterial({ map: mysql, transparent: true });
+    const htmlMaterial = new THREE.MeshBasicMaterial({ map: html, transparent: true });
+    const cssMaterial = new THREE.MeshBasicMaterial({ map: css, transparent: true });
+
+    materials = [javaMaterial, javascriptMaterial, springMaterial, mysqlMaterial, htmlMaterial, cssMaterial];
+    const materialsSize = materials.length;
+
+    for (let i = 0; i < materialsSize; i++) {
+        const material = materials[i];
+        material.opacity = 0.6;
+    }
+
+    // Create a new mesh with the geometry and material
+    const javaMesh = new THREE.Mesh(imageGeometry, javaMaterial);
+    const javascriptMesh = new THREE.Mesh(imageGeometry, javascriptMaterial);
+    const springMesh = new THREE.Mesh(imageGeometry, springMaterial);
+    const mysqlMesh = new THREE.Mesh(imageGeometry, mysqlMaterial);
+    const htmlMesh = new THREE.Mesh(imageGeometry, htmlMaterial);
+    const cssMesh = new THREE.Mesh(imageGeometry, cssMaterial);
+
+    meshes = [javaMesh, springMesh, mysqlMesh, javascriptMesh, htmlMesh, cssMesh];
+
+    // Particles
+    
+    const particlesMaterial = new THREE.PointsMaterial({
+        size: 5,
+        vertexColors: true,
+        transparent: true,
+        alphaTest: 0.1,
+        map: star,
+        blending: THREE.AdditiveBlending  
+    });
+
+    // Set the color of each particle at random from the colors array
+
+    const positionArray = particlesGeometry.getAttribute('position').array;
+    const colorArray = new Float32Array(positionArray.length);
+
+    for ( let i = 0; i < positionArray.length; i += 3 ) {
+        const color = colors[Math.floor(Math.random() * colors.length)]; // choose a random color
+        color.toArray(colorArray, i); // assign the color to the colorArray
+    }
+
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3)); // add the color attribute to the geometry
+
+
+    const particles = new THREE.Points( particlesGeometry, particlesMaterial );
+    particles.rotation.x = Math.random() * 6;
+    particles.rotation.y = Math.random() * 6;
+    particles.rotation.z = Math.random() * 6;
+
+
+    scene.add( particles, javaMesh, javascriptMesh, springMesh, htmlMesh, mysqlMesh, cssMesh );
+
+    renderer = new THREE.WebGLRenderer({
+        canvas: canvas
+    });
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor(new THREE.Color('#21282a'), 1)
+    document.body.appendChild( renderer.domElement );
+
+    document.body.addEventListener( 'mousemove', onPointerMove );
+
+    window.addEventListener( 'resize', onWindowResize );
+
 }
 
-particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3));
-particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3)); // set the color attribute
 
 
-// Materials
+function onWindowResize() {
 
-const material = new THREE.PointsMaterial({
-    size: 0.0005
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+// Sphere
+
+const sphereGeometry = new THREE.SphereGeometry(350, 40, 40);
+const sphereMaterial = new THREE.PointsMaterial({
+    size: 0.5
 });
+const sphere = new THREE.Points(sphereGeometry, sphereMaterial)
+scene.add(sphere);
 
 
-const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.015,
-    vertexColors: true,
-    transparent: true,
-    alphaTest: 0.1,
-    map: star,
-    blending: THREE.AdditiveBlending,
-});
+function onPointerMove( event ) {
 
-// Create a new material with the image textures
-const javaMaterial = new THREE.MeshBasicMaterial({ map: java, transparent: true });
-const javascriptMaterial = new THREE.MeshBasicMaterial({ map: javascript, transparent: true });
-const springMaterial = new THREE.MeshBasicMaterial({ map: spring, transparent: true });
-const mysqlMaterial = new THREE.MeshBasicMaterial({ map: mysql, transparent: true });
-const htmlMaterial = new THREE.MeshBasicMaterial({ map: html, transparent: true });
-const cssMaterial = new THREE.MeshBasicMaterial({ map: css, transparent: true });
+    mouseX = ( event.clientX - windowHalfX );
+    mouseY = ( event.clientY - windowHalfY );
 
-const materials = [javaMaterial, javascriptMaterial, springMaterial, mysqlMaterial, htmlMaterial, cssMaterial];
-const materialsSize = materials.length;
+}
 
-for (let i = 0; i < materialsSize; i++) {
-    const material = materials[i];
-    material.opacity = 0.6;
+function animate() {
+
+    requestAnimationFrame( animate );
+    render();
+
 }
 
 
+function render() {
+    
+    const meshCount = meshes.length;
+    const rotationSpeed = 1;
 
-// Mesh
-const sphere = new THREE.Points(geometry, material)
+    const time = Date.now() * 0.00005;
+    
 
-const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    camera.position.x += ( mouseX - camera.position.x ) * 0.02;
+    camera.position.y += ( - mouseY - camera.position.y ) * 0.02;
 
-// Create a new mesh with the geometry and material
-const javaMesh = new THREE.Mesh(imageGeometry, javaMaterial);
-const javascriptMesh = new THREE.Mesh(imageGeometry, javascriptMaterial);
-const springMesh = new THREE.Mesh(imageGeometry, springMaterial);
-const mysqlMesh = new THREE.Mesh(imageGeometry, mysqlMaterial);
-const htmlMesh = new THREE.Mesh(imageGeometry, htmlMaterial);
-const cssMesh = new THREE.Mesh(imageGeometry, cssMaterial);
+    camera.lookAt( scene.position );
 
+    for ( let i = 0; i < scene.children.length; i ++ ) {
 
-
-scene.add(sphere, javaMesh, javascriptMesh, springMesh, mysqlMesh, htmlMesh, cssMesh, particlesMesh);
-
-// Lights
-
-const pointLight = new THREE.PointLight(0xffffff, 0.1)
-pointLight.position.x = 2
-pointLight.position.y = 3
-pointLight.position.z = 4
-scene.add(pointLight)
-
-/**
- * Sizes
- */
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
-}
-
-window.addEventListener('resize', () =>
-{
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
-
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
-
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
-
-/**
- * Camera
- */
-// Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 0
-camera.position.y = 0
-camera.position.z = 2
-scene.add(camera)
+        const object = scene.children[ i ];
 
 
-// Controls
-// const controls = new OrbitControls(camera, canvas)
-// controls.enableDamping = true
+        if ( object instanceof THREE.Points ) {
 
-/**
- * Renderer
- */
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
+            object.rotation.y = time
 
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.setClearColor(new THREE.Color('#21282a'), 1)
-
-// Mouse
-document.addEventListener('mousemove', animateParticles);
-
-let windowHalfX = window.innerWidth / 2;
-let windowHalfY = window.innerHeight / 2;
-
-let mouseX = 0;
-let mouseY = 0;
-
-let prevMouseX = 0;
-let prevMouseY = 0;
-const delayFactor = 0.1;
-
-function animateParticles(event) {
-    prevMouseX += (event.clientX - windowHalfX - prevMouseX) * delayFactor;
-    prevMouseY += (event.clientY - windowHalfY - prevMouseY) * delayFactor;
-    mouseX = prevMouseX;
-    mouseY = prevMouseY;
-}
-
-/**
- * Animate
- */
-
-const clock = new THREE.Clock()
-
-const meshes = [javaMesh, springMesh, mysqlMesh, htmlMesh, cssMesh, javascriptMesh];
-const meshCount = meshes.length;
-const rotationSpeed = 0.08;
-
-let passiveRotX = 0;
-let passiveRotY = 0;
+        }
 
 
-
-
-const tick = () =>
-{
-    const elapsedTime = clock.getElapsedTime();
-
-    // Update objects
-    sphere.rotation.y = .1 * elapsedTime;
-    particlesMesh.rotation.x = passiveRotX;
-    particlesMesh.rotation.y = passiveRotY;
-
-    // Update particle mesh rotation based on mouse movement
-    const dampeningFactor = 0.997;
-
-    particlesMesh.rotation.x += (-mouseY / window.innerHeight - particlesMesh.rotation.x) * dampeningFactor;
-    particlesMesh.rotation.y += (-mouseX / window.innerWidth - particlesMesh.rotation.y) * dampeningFactor;
-
-    // Update passive rotation angles
-    passiveRotX += rotationSpeed;
-    passiveRotY += rotationSpeed;
+    }
 
     // Set mesh positions
     for (let i = 0; i < meshCount; i++) {
         const mesh = meshes[i];
         mesh.position.y = 0;
-        mesh.position.x = 0.8 * Math.cos((elapsedTime * rotationSpeed) + (i * 1));
-        mesh.position.z = 0.8 * Math.sin((elapsedTime * rotationSpeed) + (i * 1));
+        mesh.position.x = 500 * Math.cos((time * rotationSpeed) + (i * 1));
+        mesh.position.z = 500 * Math.sin((time * rotationSpeed) + (i * 1));
     }
 
-    // Render
-    renderer.render(scene, camera)
 
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
+
+    renderer.render( scene, camera );
+
 }
-
-tick();
-
