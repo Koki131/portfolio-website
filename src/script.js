@@ -147,7 +147,14 @@ function init() {
 
     for (let i = 0; i < materialsSize; i++) {
         const material = materials[i];
-        material.opacity = 0.6;
+        if (window.innerWidth > 1400) {
+            material.opacity = 0.6;
+        } else if (window.innerWidth > 1000) {
+            material.opacity = 0.5;
+        } else {
+            material.opacity = 0.2;
+        }
+        
     }
 
     // Create a new mesh with the geometry and material
@@ -224,7 +231,7 @@ function onWindowResize() {
 
 const sphereGeometry = new THREE.SphereGeometry(350, 40, 40);
 const sphereMaterial = new THREE.PointsMaterial({
-    size: 0.5
+    size: 1
 });
 const sphere = new THREE.Points(sphereGeometry, sphereMaterial)
 scene.add(sphere);

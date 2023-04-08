@@ -765,7 +765,7 @@ nav li a img {
   
 /* media query */
 
-@media (max-width: 1300px) {
+@media (max-width: 1400px) {
 
     header {
         height: 3em;
@@ -954,7 +954,7 @@ nav li a img {
     }
 
     .home h1 {
-        font-size: 8px;
+        font-size: 10px;
     }
     .about p,
     .home p {

@@ -498,7 +498,7 @@
         function animateHomeSection() {
             homeTimeline.from(borderHome, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
             homeBorderTimeline.from(homeTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
-            homeTimeline.to(homeH1, { duration: 2, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );            
+            homeTimeline.to(homeH1, { delay: 0.5, duration: 2, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );            
             homeTimeline.to(homeP, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' }, "-=0.5" );
         }
 
@@ -506,32 +506,32 @@
         function animateAboutSection() {
             aboutTimeline.from(borderAbout, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
             aboutPBorderTimeline.from(aboutTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
-            aboutTimeline.to(aboutH1, {duration: 2, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
+            aboutTimeline.to(aboutH1, { delay: 0.5, duration: 2, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
             aboutPBorderTimeline.to(aboutP, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '5px' }, "-=0.2" );
         }
 
         function animateTestimonialsSection() {
             testimonialsTimeline.from(borderTestimonials, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
             testimonialsBorderTimeline.from(testimonialsTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
-            testimonialsTimeline.to(testimonialsH1, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
+            testimonialsTimeline.to(testimonialsH1, { delay: 0.5, duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
         }
 
         function animateProjectsSection() {
             projectsTimeline.from(borderProjects, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
             projectsBorderTimeline.from(projectsTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
-            projectsTimeline.to(projectsH1, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
+            projectsTimeline.to(projectsH1, { delay: 0.5, duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
         }
 
         function animateCertificatesSection() {
             certificatesTimeline.from(borderCertificates, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
             certificatesBorderTimeline.from(certificatesTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
-            certificatesTimeline.to(certificatesH1, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
+            certificatesTimeline.to(certificatesH1, { delay: 0.5, duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
         }
 
         function animateContactSection() {
             contactTimeline.from(borderContact, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
             contactBorderTimeline.from(contactTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
-            contactTimeline.to(contactH1, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
+            contactTimeline.to(contactH1, { delay: 0.5, duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );
             contactTimeline.to(contactContents, {delay: 1, duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px'}, "-=1.5");
         }
 
@@ -640,7 +640,7 @@
             return currentIndex;
         }
 
-        // listening to the scroll to add animations
+        // // listening to the scroll to add animations
 
         window.addEventListener('scroll', function() {
 
