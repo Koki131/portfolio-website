@@ -122,9 +122,9 @@ function init() {
 
     for ( let i = 0; i < 10000; i ++ ) {
 
-        const x = Math.random() * 2000 - 1000;
-        const y = Math.random() * 2000 - 1000;
-        const z = Math.random() * 2000 - 1000;
+        const x = Math.random() * 4000 - 2000;
+        const y = Math.random() * 4000 - 2000;
+        const z = Math.random() * 4000 - 2000;
 
         vertices.push( x, y, z );
 
@@ -148,9 +148,9 @@ function init() {
     for (let i = 0; i < materialsSize; i++) {
         const material = materials[i];
         if (window.innerWidth > 1400) {
-            material.opacity = 0.6;
+            material.opacity = 0.4;
         } else if (window.innerWidth > 1000) {
-            material.opacity = 0.5;
+            material.opacity = 0.3;
         } else {
             material.opacity = 0.2;
         }
@@ -170,7 +170,7 @@ function init() {
     // Particles
     
     const particlesMaterial = new THREE.PointsMaterial({
-        size: 5,
+        size: 8,
         vertexColors: true,
         transparent: true,
         alphaTest: 0.1,
