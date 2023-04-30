@@ -14,7 +14,7 @@ $ npm run dev
 ```
 
 ### Preview
-![Preview](assets/portfolio1.png)
+![Preview](assets/portfolio-preview.gif)
 
 
 
