@@ -15,7 +15,6 @@ body
     font-family: 'Poppins', sans-serif;
     color: #fff;
     scroll-behavior: smooth;
-    background: #21282a;
 }
 
 
@@ -169,6 +168,7 @@ nav li a {
     font-weight: 200;
     font-size: 1em;
     transition: 0.3s ease-in-out;
+    text-shadow: white 0px 0px 10px;
 }
     
 nav li a:hover {
@@ -215,6 +215,7 @@ nav li a img {
 .home p {
     font-weight: 100;
     font-size: 4rem !important;
+    text-shadow: white 0px 0px 10px;
 }
 
 /* About section */
@@ -254,6 +255,7 @@ nav li a img {
     text-align: justify;
     font-weight: 200;
     clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    text-shadow: white 0px 0px 10px;
 } 
 
 .text-container {
@@ -361,21 +363,25 @@ nav li a img {
 .testimonials #head {
     font-size: 22px;
     font-weight: 500;
+    text-shadow: white 0px 0px 10px;
 }
 
 .testimonials #title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 400;
+    text-shadow: white 0px 0px 10px;
 }
 
 .testimonials #work-time {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 200;
+    text-shadow: white 0px 0px 10px;
 }
 
 .testimonials #description {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 300;
+    text-shadow: white 0px 0px 10px;
 }
 
 
@@ -450,7 +456,8 @@ nav li a img {
     overflow: hidden;
     position: relative;
     z-index: 900;
-    backdrop-filter: blur(2px);
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(20px); 
 }
 
 
@@ -687,16 +694,18 @@ nav li a img {
     background: transparent;
     border: 1px solid white;
     color: #fff;
+    text-shadow: white 0px 0px 10px;
 }
 
 .contact .fields .field textarea { 
     width: 96%;
     height: 100%;
     padding: 20px;
-    background: transparent;
+    background: rgba(0, 0, 0, 0);
     border: 1px solid white;
     font-size: 16px;
     color: #fff;
+    text-shadow: white 0px 0px 10px;
 }
 
 .contact .fields .field {
@@ -713,6 +722,7 @@ nav li a img {
     color: white;
     font-size: 18px;
     transition: 0.3s ease-in-out;
+    text-shadow: white 0px 0px 10px;
 }
 
 .contact .fields .submit button:hover {
@@ -723,17 +733,17 @@ nav li a img {
 
 
 .projects .owl-carousel {
-    width: 950px !important;
+    width: 1100px !important;
 }
 
 
 .certificates .owl-carousel {
-    width: 950px !important;
+    width: 1100px !important;
 }
 
 
 .testimonials .owl-carousel {
-    width: 900px !important;
+    width: 1000px !important;
 }
 
 /*  */

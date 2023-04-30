@@ -82,7 +82,7 @@ const javascript = loader.load('./rotating-images/javascript.png')
 
 
 
-let camera, scene, renderer;
+let camera, scene, renderer, pointlight;
 let mouseX = 0, mouseY = 0;
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
@@ -102,15 +102,27 @@ const canvas = document.querySelector('canvas.webgl')
 
 
 
+
 init();
 animate();
+
+
+
+
 
 function init() {
 
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2000 );
     camera.position.z = 1000;
 
+
+
     scene = new THREE.Scene();
+
+    pointlight = new THREE.PointLight( 0xFFA500, 100000, 1000 );
+    pointlight.position.set( 0, 500, 1000 );
+    scene.add( pointlight );
+    
     
 
     const particlesGeometry = new THREE.BufferGeometry();
@@ -148,7 +160,7 @@ function init() {
     for (let i = 0; i < materialsSize; i++) {
         const material = materials[i];
         if (window.innerWidth > 1400) {
-            material.opacity = 0.4;
+            material.opacity = 0.3;
         } else if (window.innerWidth > 1000) {
             material.opacity = 0.3;
         } else {
@@ -173,7 +185,7 @@ function init() {
         size: 8,
         vertexColors: true,
         transparent: true,
-        alphaTest: 0.1,
+        alphaTest: 0.2,
         map: star,
         blending: THREE.AdditiveBlending  
     });
@@ -202,6 +214,7 @@ function init() {
     renderer = new THREE.WebGLRenderer({
         canvas: canvas
     });
+ 
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setClearColor(new THREE.Color('#21282a'), 1)
@@ -227,14 +240,58 @@ function onWindowResize() {
 
 }
 
-// Sphere
 
-const sphereGeometry = new THREE.SphereGeometry(350, 40, 40);
-const sphereMaterial = new THREE.PointsMaterial({
-    size: 1
-});
-const sphere = new THREE.Points(sphereGeometry, sphereMaterial)
+
+
+
+
+const cubeLoader = new THREE.CubeTextureLoader();
+const cubeMap = cubeLoader.load([
+    './space/px.jpg',
+    './space/nx.jpg',
+    './space/py.jpg',
+    './space/ny.jpg',
+    './space/pz.jpg',
+    './space/nz.jpg',
+]);
+
+
+
+//  Black Hole
+
+let sphereGeometry; 
+let sphereMaterial;
+
+if (window.innerWidth >= 1920) {
+    sphereGeometry = new THREE.SphereGeometry( 350, 64, 32 );
+    sphereMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          envMap: { value: cubeMap },
+          time: { value: 0 },
+          lensStrength: { value: 1 }
+        },
+        vertexShader: document.getElementById('vertexShader').textContent,
+        fragmentShader: document.getElementById('fragmentShader').textContent,
+        side: THREE.DoubleSide,
+        transparent: false,
+    });
+} else {
+    sphereGeometry = new THREE.SphereGeometry( 350, 64, 32 );
+    sphereMaterial = new THREE.MeshPhysicalMaterial({
+        transparent: true,
+        opacity: 0.1,
+        roughness: 0,
+        metalness: 1
+    });
+}
+
+
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+
+
 scene.add(sphere);
+
+
 
 
 function onPointerMove( event ) {
@@ -244,9 +301,14 @@ function onPointerMove( event ) {
 
 }
 
+
+
+
 function animate() {
 
     requestAnimationFrame( animate );
+
+
     render();
 
 }
@@ -258,10 +320,10 @@ function render() {
     const rotationSpeed = 1;
 
     const time = Date.now() * 0.00005;
-    
 
     camera.position.x += ( mouseX - camera.position.x ) * 0.02;
     camera.position.y += ( - mouseY - camera.position.y ) * 0.02;
+
 
     camera.lookAt( scene.position );
 
@@ -276,6 +338,17 @@ function render() {
 
         }
 
+        if ( object.geometry instanceof THREE.SphereGeometry ) {
+            object.rotation.z = time
+
+        }
+
+        if ( object.material instanceof THREE.ShaderMaterial) {
+            const time = performance.now() * 0.002;
+            object.material.uniforms.time.value = time;
+            object.material.uniforms.lensStrength.value = Math.sin(time * 0.5) * 0.5 + 0.1;
+        }
+
 
     }
 
@@ -287,8 +360,9 @@ function render() {
         mesh.position.z = 500 * Math.sin((time * rotationSpeed) + (i * 1));
     }
 
-
-
+    
     renderer.render( scene, camera );
 
+
 }
+

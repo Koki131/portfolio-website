@@ -495,6 +495,8 @@
         let isCertificatesAnimated = false;
         let isContactAnimated = false;
 
+        // animating sections on >= 1920px screen width
+
         function animateHomeSection() {
             homeTimeline.from(borderHome, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
             homeBorderTimeline.from(homeTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
@@ -661,7 +663,7 @@
             
             } else if (currentSectionIndex == 2 && isTestimonialsAnimated) {
 
-                aboutSection.classList.add("animate__animated", "animate__fadeOut");
+                aboutSection.classList.add("animate__fadeOut");
                 testimonialsSection.classList.remove("animate__fadeOut");
                 testimonialsSection.classList.add("animate__animated", "animate__fadeIn");
                 projectsSection.classList.add("animate__animated", "animate__fadeOut");
@@ -691,7 +693,62 @@
 
         });
 
-        init();
+        function disableAnimationHomeSection() {
+            homeH1.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)';
+            homeP.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)';
+        }
+
+        function disableAnimationAboutSection() {
+            aboutH1.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)';
+            aboutP.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)';
+        }
+
+        function disableAnimationTestimonialsSection() {
+            testimonialsH1.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)';
+        }
+
+        function disableAnimationProjectsSection() {
+            projectsH1.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)';
+        }
+
+        function disableAnimationCertificatesSection() {
+            certificatesH1.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)';
+        }
+
+        function disableAnimationContactSection() {
+            contactH1.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)';
+        }
+
+        // removing gsap animations for smaller screens
+
+        if (window.innerWidth >= 1920) {
+
+            init();
+        
+        } else {
+            
+            isAboutAnimated = true;
+            isTestimonialsAnimated = true;
+            isProjectsAnimated = true;
+            isCertificatesAnimated = true;
+            isContactAnimated = true;
+
+            aboutSection.style.opacity = '0';
+            testimonialsSection.style.opacity = '0';
+            projectsSection.style.opacity = '0';
+            certificatesSection.style.opacity = '0';
+            contactSection.style.opacity = '0';
+
+            disableAnimationHomeSection();
+            disableAnimationAboutSection();
+            disableAnimationTestimonialsSection() ;
+            disableAnimationProjectsSection();
+            disableAnimationCertificatesSection();
+            disableAnimationContactSection();
+            
+        }
+
+        
     </script>
 
     <!-- form to google sheets script -->
@@ -707,6 +764,67 @@
             .catch(error => alert("Couldn't send e-mail"))
         })
     </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+            uniform float time;
+            uniform float rotationSpeed;
+            varying vec3 vPosition;
 
+            void main() {
+                // Rotate the mesh around the y-axis
+                    mat4 rotationMatrix = mat4(
+                    vec4(cos(time * rotationSpeed), 0, sin(time * rotationSpeed), 0),
+                    vec4(0, 1, 0, 0),
+                    vec4(-sin(time * rotationSpeed), 0, cos(time * rotationSpeed), 0),
+                    vec4(0, 0, 0, 1)
+                );
+                vPosition = (rotationMatrix * vec4(position, 1.0)).xyz;
+
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(vPosition, 1.0);
+            }
+        </script>
+
+        <script id="fragmentShader" type="x-shader/x-fragment">
+            uniform samplerCube envMap;
+            uniform float time;
+            uniform float lensStrength;
+            uniform float distortionStrength;
+            uniform float reflectionStrength;
+            varying vec3 vPosition;
+        
+            const float blackHoleRadius = 50.0; // Set the radius of the black hole
+            const float gravityStrength = 0.3; // Set the strength of the gravitational lensing effect
+        
+            void main() {
+                // Calculate the distance between the current pixel and the center of the black hole
+                vec3 center = vec3(0.0, 0.0, 500.0);
+                float distance = length(vPosition - center);
+        
+            
+                // Calculate the gravitational lensing effect
+                vec3 ray = normalize(vPosition);
+                vec3 offset = vec3(gravityStrength * pow(distance / blackHoleRadius, 2.0), -10.0, 10.0);
+                vec3 refracted = refract(ray, normalize(center - vPosition) + offset, lensStrength);
+
+                // Apply noise to the refraction vector
+                vec3 noise = textureCube(envMap, ray * 0.5 + 0.5).rgb;
+                vec3 distorted = refracted + distortionStrength * (noise - 0.5);
+
+                // Apply reflection
+                vec3 surfaceNormal = normalize(cross(dFdx(vPosition), dFdy(vPosition)));
+                vec3 reflected = reflect(ray, surfaceNormal);
+                vec4 color = mix(
+                    textureCube(envMap, distorted),
+                    textureCube(envMap, reflected),
+                    reflectionStrength
+                );
+
+                gl_FragColor = color;
+            
+            }
+        </script>
+        
+
+        
+    
 </body>
 </html>
