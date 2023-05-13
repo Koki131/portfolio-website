@@ -26,6 +26,7 @@
     
 </head>
 <body>
+
     <header>
         <nav>
             <ul>
@@ -50,6 +51,8 @@
         </div>
     </section>
 
+    <div class="loader"></div>
+    
     <section class="container" id="about">
         <div class="about">
             <h1>About</h1>
@@ -320,6 +323,31 @@
 
     <script>
 
+        // loader
+
+        window.addEventListener("load", function() {
+            // create and add the background element
+            let background = document.createElement("div");
+            let canvas = document.querySelector('canvas');
+            let header = document.querySelector('header');
+            let home = document.querySelector('.home');
+            
+            background.id = "background";
+            document.body.appendChild(background);
+
+            window.location.href = '#home';
+
+            // after the page loads, wait 3 seconds and then hide the loader and remove the background
+            setTimeout(function() {
+                    var loader = document.querySelector(".loader");
+                    loader.classList.add("hide");
+                    background.remove();
+                    canvas.style.visibility = 'visible';
+                    header.style.visibility = 'visible';
+                    home.style.visibility = 'visible';
+            }, 3000);
+        });
+
         // navbar
 
         var card = document.getElementById('activator');
@@ -498,8 +526,8 @@
         // animating sections on >= 1920px screen width
 
         function animateHomeSection() {
-            homeTimeline.from(borderHome, { delay: 0.3, duration: 1, cssRule: { scaleX: 0 } });
-            homeBorderTimeline.from(homeTextContainer, { delay: 0.3, duration: 1, cssRule: { scaleY: 0 } });
+            homeTimeline.from(borderHome, { delay: 6, duration: 1, cssRule: { scaleX: 0 } });
+            homeBorderTimeline.from(homeTextContainer, { delay: 6, duration: 1, cssRule: { scaleY: 0 } });
             homeTimeline.to(homeH1, { delay: 0.5, duration: 2, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)', y: '30px' }, "-=1.5" );            
             homeTimeline.to(homeP, { duration: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' }, "-=0.5" );
         }

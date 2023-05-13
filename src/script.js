@@ -24,6 +24,7 @@ import java1Cert from '../assets/certificates/java-1.png'
 import java2Cert from '../assets/certificates/java-2.png'
 import springCert from '../assets/certificates/spring.png'
 import htmlCssCert from '../assets/certificates/html-css.png'
+import * as TWEEN from '@tweenjs/tween.js'
 
 // logo 
 const logoImage = document.querySelector("#favicon");
@@ -113,8 +114,24 @@ animate();
 function init() {
 
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2000 );
-    camera.position.z = 1000;
+    camera.position.z = 2300;
 
+    const zoomTween = new TWEEN.Tween(camera.position)
+        .to({ z: 1000 }, 5000) // set the target position and duration
+        .easing(TWEEN.Easing.Quadratic.InOut) // set the easing function
+        .onUpdate(() => {
+            camera.updateProjectionMatrix(); // update the camera's projection matrix
+    });
+
+    // start the zoom tween when the window loads
+
+    window.addEventListener('load', () => {
+       
+       setTimeout(function() {
+            zoomTween.start();
+       }, 2500);
+
+    });
 
 
     scene = new THREE.Scene();
@@ -307,11 +324,11 @@ function onPointerMove( event ) {
 function animate() {
 
     requestAnimationFrame( animate );
-
-
+    TWEEN.update();
     render();
 
 }
+
 
 
 function render() {
