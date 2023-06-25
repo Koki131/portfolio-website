@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import * as dat from 'dat.gui'
 import 'owl.carousel/dist/assets/owl.carousel.css'
 import 'owl.carousel'
+import * as TWEEN from '@tweenjs/tween.js'
 
 // projects
 import projectForeground from '../assets/images/project-foreground.png'
@@ -24,7 +25,9 @@ import java1Cert from '../assets/certificates/java-1.png'
 import java2Cert from '../assets/certificates/java-2.png'
 import springCert from '../assets/certificates/spring.png'
 import htmlCssCert from '../assets/certificates/html-css.png'
-import * as TWEEN from '@tweenjs/tween.js'
+
+
+
 
 // logo 
 const logoImage = document.querySelector("#favicon");
@@ -279,28 +282,22 @@ const cubeMap = cubeLoader.load([
 let sphereGeometry; 
 let sphereMaterial;
 
-if (window.innerWidth >= 1920) {
-    sphereGeometry = new THREE.SphereGeometry( 350, 64, 32 );
-    sphereMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          envMap: { value: cubeMap },
-          time: { value: 0 },
-          lensStrength: { value: 1 }
-        },
-        vertexShader: document.getElementById('vertexShader').textContent,
-        fragmentShader: document.getElementById('fragmentShader').textContent,
-        side: THREE.DoubleSide,
-        transparent: false,
-    });
-} else {
-    sphereGeometry = new THREE.SphereGeometry( 350, 64, 32 );
-    sphereMaterial = new THREE.MeshPhysicalMaterial({
-        transparent: true,
-        opacity: 0.1,
-        roughness: 0,
-        metalness: 1
-    });
-}
+
+
+sphereGeometry = new THREE.SphereGeometry( 350, 64, 32 );
+sphereMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+        envMap: { value: cubeMap },
+        time: { value: 0 },
+        lensStrength: { value: 1 }
+    },
+    vertexShader: document.getElementById('vertexShader').textContent,
+    fragmentShader: document.getElementById('fragmentShader').textContent,
+    side: THREE.DoubleSide,
+    transparent: false,
+});
+
+
 
 
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -356,11 +353,13 @@ function render() {
         }
 
         if ( object.geometry instanceof THREE.SphereGeometry ) {
+            
             object.rotation.z = time
 
         }
 
         if ( object.material instanceof THREE.ShaderMaterial) {
+
             const time = performance.now() * 0.002;
             object.material.uniforms.time.value = time;
             object.material.uniforms.lensStrength.value = Math.sin(time * 0.5) * 0.5 + 0.1;
@@ -371,6 +370,7 @@ function render() {
 
     // Set mesh positions
     for (let i = 0; i < meshCount; i++) {
+
         const mesh = meshes[i];
         mesh.position.y = 0;
         mesh.position.x = 500 * Math.cos((time * rotationSpeed) + (i * 1));

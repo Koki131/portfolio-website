@@ -23,6 +23,8 @@
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
 
+
+
     
 </head>
 <body>
@@ -322,6 +324,14 @@
     <!-- index.js -->
 
     <script>
+
+
+        // performance prompt 
+        let performanceChoice = confirm(
+            "This website uses gsap animations which don't perform well on low-end devices \n\n" +
+            "(Press Ok for higher-end machines / Cancel for lower-end)"
+        );
+
 
         // loader
 
@@ -748,8 +758,8 @@
         }
 
         // removing gsap animations for smaller screens
-
-        if (window.innerWidth >= 1920) {
+        
+        if (performanceChoice) {
 
             init();
         
@@ -792,6 +802,7 @@
             .catch(error => alert("Couldn't send e-mail"))
         })
     </script>
+
     <script id="vertexShader" type="x-shader/x-vertex">
             uniform float time;
             uniform float rotationSpeed;
