@@ -37,16 +37,18 @@ logoImage.href = logo;
 // loading images
 // project images
 const employeeDirectory = document.querySelector("#employee-directory");
-const transcription = document.querySelector("#transcription");
 const forecast = document.querySelector("#forecast");
 const cryptoTicker = document.querySelector("#crypto-ticker");
 const portfolioWebsite = document.querySelector("#portfolio");
+const backtrackVisualizer = document.querySelector("#backtrack-visualizer");
+const mazeVisualizer = document.querySelector("#maze-visualizer");
 
 employeeDirectory.src = projectForeground;
-transcription.src = weather_app;
 forecast.src = weather_app;
 cryptoTicker.src = crypto_ticker;
 portfolioWebsite.src = portfolio;
+backtrackVisualizer.src = portfolio;
+mazeVisualizer.src = portfolio;
 
 // certificate images
 const javaBackground = document.querySelector("#javaBackground");

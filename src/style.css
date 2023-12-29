@@ -98,7 +98,7 @@ a {
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 2rem;
     width: 20vw;
     line-height: 97%;
     text-align: right;
@@ -215,7 +215,7 @@ nav li a img {
 }
 .home p {
     font-weight: 100;
-    font-size: 4rem !important;
+    font-size: 3.5rem !important;
     text-shadow: white 0px 0px 10px;
 }
 
@@ -251,12 +251,13 @@ nav li a img {
 .about p {
     flex-basis: 0;
     flex-grow: 1;
-    font-size: 20px !important;
+    font-size: 1.1em !important;
     overflow: auto;
     text-align: justify;
     font-weight: 200;
     clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
     text-shadow: white 0px 0px 10px;
+    backdrop-filter: blur(1px);
 } 
 
 .text-container {
@@ -299,6 +300,15 @@ nav li a img {
     border-left: 1px solid #fff;
     transform: scaleY(1);
 }
+
+
+.projects .text h4 {
+    font-size: 0.9em;
+}
+.projects .text span {
+    font-size: 0.8em;
+}
+
 .projects .text-container::before {
     content: '';
     position: absolute;
@@ -356,31 +366,31 @@ nav li a img {
 .testimonials h1 {
     flex-basis: 0;
     flex-grow: 1;
-    font-weight: 400;
+    font-weight: 300;
     width: 100%;
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 }
 
 .testimonials #head {
-    font-size: 22px;
-    font-weight: 500;
-    text-shadow: white 0px 0px 10px;
-}
-
-.testimonials #title {
-    font-size: 20px;
+    font-size: 1.2em;
     font-weight: 400;
     text-shadow: white 0px 0px 10px;
 }
 
+.testimonials #title {
+    font-size: 1.1em;
+    font-weight: 300;
+    text-shadow: white 0px 0px 10px;
+}
+
 .testimonials #work-time {
-    font-size: 18px;
+    font-size: 0.8em;
     font-weight: 200;
     text-shadow: white 0px 0px 10px;
 }
 
 .testimonials #description {
-    font-size: 20px;
+    font-size: 1em;
     font-weight: 300;
     text-shadow: white 0px 0px 10px;
 }
@@ -451,14 +461,14 @@ nav li a img {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 95%;
-    width: 95%;
+    height: 85%;
+    width: 85%;
     border: 1px solid rgba(255, 255, 255, 1);
     overflow: hidden;
     position: relative;
     z-index: 900;
     background: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(20px); 
+    backdrop-filter: blur(1px); 
 }
 
 
@@ -667,7 +677,7 @@ nav li a img {
 
 .contact li {
     padding-bottom: 20px;
-    font-size: 20px;
+    font-size: 1em;
 }
 
 .contact a {
